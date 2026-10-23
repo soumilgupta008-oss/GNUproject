@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculus Lab Project – Labs 8, 9, 10</title>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#667;--card:#f1f3f6;--acc:#2563eb;--ok:#16a34a;--bad:#dc2626;--cv:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171c;--fg:#eceef2;--mut:#9aa3b2;--card:#222630;--acc:#60a5fa;--ok:#4ade80;--bad:#f87171;--cv:#1b1e26}}
+:root[data-theme="dark"]{--bg:#15171c;--fg:#eceef2;--mut:#9aa3b2;--card:#222630;--acc:#60a5fa;--ok:#4ade80;--bad:#f87171;--cv:#1b1e26}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0 auto;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif;max-width:760px;padding:14px}
+h1{font-size:19px;margin:0}h2{font-size:17px;margin:0 0 4px}.s{color:var(--mut);margin:2px 0 10px}
+.tabs{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+.tabs button{flex:1;min-width:140px;padding:9px;border:0;border-radius:8px;background:var(--card);color:var(--fg);font-weight:600;cursor:pointer}
+.tabs button.on{background:var(--acc);color:#fff}
+.card{background:var(--card);border-radius:10px;padding:12px;margin-bottom:10px}
+.pane{display:none}.pane.on{display:block}
+label{display:flex;justify-content:space-between;font-size:14px;margin-top:6px}
+input[type=range]{width:100%}select{width:100%;padding:6px;border-radius:6px}
+canvas{width:100%;max-width:100%;background:var(--cv);border-radius:8px;display:block}
+table{width:100%;border-collapse:collapse}td,th{padding:5px;text-align:left;border-bottom:1px solid var(--mut)}
+.m{font-family:ui-monospace,monospace;font-size:13px}.b{font-weight:700}
+button.p{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:7px 14px;font-weight:600;cursor:pointer}
+body{background:radial-gradient(900px 320px at 50% -80px,color-mix(in srgb,var(--acc) 20%,transparent),transparent),var(--bg)}
+.hero{background:linear-gradient(135deg,#4f46e5,#2563eb 55%,#06b6d4);color:#fff;border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 10px 26px rgba(37,99,235,.3)}
+.hero h1{font-size:23px;letter-spacing:-.3px}.hero p{margin:4px 0 10px;opacity:.92;font-size:14px}
+.chips span{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:3px 11px;font-size:12px;margin:0 5px 4px 0}
+.tabs{gap:8px}
+.tabs button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:11px 13px;border-radius:13px;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:transform .15s,box-shadow .15s;text-align:left;font-size:14px}
+.tabs button small{font-weight:400;opacity:.75;font-size:12px}
+.tabs button:hover{transform:translateY(-2px)}
+.tabs button.on{background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 8px 18px rgba(37,99,235,.38)}
+.card{border-radius:15px;padding:14px;border:1px solid color-mix(in srgb,var(--mut) 20%,transparent);box-shadow:0 1px 2px rgba(0,0,0,.05),0 6px 16px rgba(0,0,0,.05)}
+.card h2{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.card h2::before{content:"";width:5px;height:20px;border-radius:3px;background:linear-gradient(#4f46e5,#06b6d4)}
+.card.m{border-style:dashed}
+#o2,#o3{border-left:5px solid var(--acc);border-style:solid;border-width:1px 1px 1px 5px;line-height:1.7}
+.pane.on{animation:fd .3s ease}@keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:9px;margin:9px 0;border-radius:999px;--p:50%;--c:#4f46e5;background:linear-gradient(90deg,#06b6d4,var(--c)) 0/var(--p) 100% no-repeat,color-mix(in srgb,var(--mut) 30%,transparent);cursor:pointer;outline:none;box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:4px solid var(--c);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .12s}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--c);box-shadow:0 2px 8px rgba(0,0,0,.35)}
+input[type=range]::-moz-range-track{background:transparent}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+select{background:var(--bg);color:var(--fg);border:1px solid color-mix(in srgb,var(--mut) 40%,transparent);padding:9px;border-radius:9px;font-size:14px}
+canvas{border:1px solid color-mix(in srgb,var(--mut) 25%,transparent);border-radius:12px}
+button.p{border-radius:999px;padding:8px 20px;background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 4px 12px rgba(37,99,235,.35)}
+table{border-radius:10px;overflow:hidden}th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut)}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--mut) 8%,transparent)}td,th{padding:8px 6px}
+</style></head><body>
+<div class="hero"><h1>📐 Calculus Lab Project</h1>
+<p>Three real-life problems, solved with the maths from Labs 8, 9 and 10.</p>
+<div class="chips"><span>VIT Vellore</span><span>BAMAT101</span><span>Line integrals</span><span>ODEs</span><span>PDEs</span></div></div>
+<div class="tabs"><button class="on" data-t="p1">🚁 Drone in wind<small>Lab 8 · Line integrals</small></button><button data-t="p2">🚗 Shock absorber<small>Lab 9 · Second-order ODEs</small></button><button data-t="p3">🌊 River pollution<small>Lab 10 · PDEs</small></button></div>
+
+<!-- LAB 8 -->
+<div class="pane on" id="p1">
+<div class="card"><h2>Problem: which route is best for a drone?</h2>
+<div class="s">A drone flies from A(−1, 0) to B(1, 0) through wind F. Work done by the wind = ∫ F · dr. Positive means the wind helps; negative means the drone fights it.</div>
+<label>Wind field</label>
+<select id="wf"><option value="0">F = (3x² − y) i + 2x j  (lab Example 1)</option><option value="1">F = 2xy i + x² j  (conservative wind)</option></select>
+<label>Route</label>
+<select id="rt"><option value="0">Straight line</option><option value="1">Curve y = 1 − x²</option><option value="2">Zig-zag via (0, 1)</option></select></div>
+<div class="card"><canvas id="c1" width="640" height="300"></canvas></div>
+<div class="card"><table id="t1"></table><div class="s" id="n1" style="margin-top:8px"></div></div>
+<div class="card m">Method: parametrize the path x(t), y(t) → dot F with dr → integrate over t.<br>Octave: I = int(dot(F, dr), t, a, b)</div>
+</div>
+
+<!-- LAB 9 -->
+<div class="pane" id="p2">
+<div class="card"><h2>Problem: how does a vehicle bounce after a pothole?</h2>
+<div class="s">Spring + shock absorber: m x″ + c x′ + k x = 0, with x(0) = 0 and x′(0) = v₀ (the speed the bump gives it).</div>
+<label>Mass m (×100 kg) <b id="mv"></b></label><input id="m" type="range" min="0.5" max="5" step="0.1" value="2">
+<label>Damping c (shock absorber) <b id="cv"></b></label><input id="c" type="range" min="0" max="60" step="1" value="14">
+<label>Spring stiffness k <b id="kv"></b></label><input id="k" type="range" min="10" max="300" step="5" value="128">
+<label>Bump speed v₀ <b id="vv"></b></label><input id="v" type="range" min="0.1" max="2" step="0.1" value="0.6"></div>
+<div class="card"><canvas id="c2" width="640" height="280"></canvas></div>
+<div class="card m" id="o2"></div>
+<div class="card m">Method: auxiliary equation m r² + c r + k = 0 → check the roots (distinct, repeated, complex) → write the solution → apply x(0), x′(0).<br>Octave: dsolve(...) or the variation of parameters code.</div>
+</div>
+
+<!-- LAB 10 -->
+<div class="pane" id="p3">
+<div class="card"><h2>Problem: where does the pollution go?</h2>
+<div class="s">Pollution in a river of speed a follows u<sub>t</sub> + a u<sub>x</sub> = 0. Separation of variables u = X(x)T(t) gives u = A e<sup>λ(at − x)</sup>, a pattern that slides downstream at speed a.</div>
+<label>River speed a (km/h) <b id="av"></b></label><input id="a" type="range" min="0.5" max="3" step="0.1" value="1">
+<label>Constant λ <b id="lv"></b></label><input id="l" type="range" min="0.2" max="1.5" step="0.1" value="0.6">
+<button class="p" id="pl" style="margin-top:8px">Pause</button></div>
+<div class="card"><canvas id="c3" width="640" height="280"></canvas>
+<div class="s" style="margin:6px 0 0">Curve = pollution level along the river (A = 1). Dashed line = level 1. The orange dot, where the level equals 1, travels at speed a.</div></div>
+<div class="card m" id="o3"></div>
+<div class="card m">Steps: T′ = aλT ⇒ T = T₀e<sup>aλt</sup>;  X′ = −λX ⇒ X = X₀e<sup>−λx</sup>;  u = A e<sup>λ(at − x)</sup><br>Octave: dsolve for each ODE, then multiply.</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i),css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tabs button,.pane").forEach(e=>e.classList.remove("on"));
+  b.classList.add("on");$(b.dataset.t).classList.add("on");draw1();draw2();});
+
+/* ---------- LAB 8 ---------- */
+const F=[(x,y)=>[3*x*x-y,2*x],(x,y)=>[2*x*y,x*x]];
+const R=[t=>[-1+2*t,0,2,0],
+ t=>{const x=-1+2*t;return[x,1-x*x,2,-2*x*2]},
+ t=>t<.5?[-1+2*t,2*t,2,2]:[-1+2*(t-.5)*1+0,0,0,0]];
+R[1]=t=>{const x=-1+2*t;return[x,1-x*x,2,-4*x]};
+R[2]=t=>t<.5?[-1+2*t,2*t,2,2]:[2*t-1,2-2*t,2,-2];
+function work(f,r){let s=0,N=2000;for(let i=0;i<N;i++){const[x,y,dx,dy]=r((i+.5)/N),[a,b]=f(x,y);s+=(a*dx+b*dy)/N}return s}
+const names=["Straight line","Curve y = 1 − x²","Zig-zag via (0, 1)"];
+function draw1(){
+  const c=$("c1"),g=c.getContext("2d"),W=c.width,H=c.height,wf=+$("wf").value,rt=+$("rt").value;
+  const P=(x,y)=>[(x+1.5)/3*W,H-(y+.5)/2*H];
+  g.clearRect(0,0,W,H);g.strokeStyle=css("--mut");g.fillStyle=css("--mut");g.lineWidth=1;
+  for(let x=-1.4;x<=1.5;x+=.3)for(let y=-.4;y<=1.5;y+=.3){
+    const[a,b]=F[wf](x,y),m=Math.hypot(a,b)||1,k=.12/Math.max(1,m/3),[p,q]=P(x,y),[p2,q2]=P(x+a/m*k*1.6,y+b/m*k*1.6);
+    g.beginPath();g.moveTo(p,q);g.lineTo(p2,q2);g.stroke();g.beginPath();g.arc(p2,q2,2,0,7);g.fill();}
+  const col=["#2563eb","#16a34a","#d97706"];
+  R.forEach((r,i)=>{g.strokeStyle=col[i];g.lineWidth=i==rt?5:2;g.globalAlpha=i==rt?1:.45;g.beginPath();
+    for(let j=0;j<=100;j++){const[x,y]=r(Math.min(.9999,j/100)),[p,q]=P(x,y);j?g.lineTo(p,q):g.moveTo(p,q)}g.stroke()});
+  g.globalAlpha=1;g.fillStyle=css("--fg");g.font="bold 14px sans-serif";
+  let[p,q]=P(-1,0);g.fillText("A",p-14,q+16);[p,q]=P(1,0);g.fillText("B",p+6,q+16);
+  const w=R.map(r=>work(F[wf],r));
+  const best=w.indexOf(Math.max(...w));
+  $("t1").innerHTML="<tr><th>Route</th><th>Work by wind</th><th></th></tr>"+w.map((v,i)=>`<tr><td style="color:${col[i]};font-weight:${i==rt?700:400}">${names[i]}</td><td class="m">${v.toFixed(3)}</td><td>${v>0.001?"wind helps":v<-0.001?"fights wind":"neutral"}${i==best&&Math.abs(w[0]-w[1])>.01?" ★ best":""}</td></tr>`).join("");
+  $("n1").textContent=wf==0?"This wind is not conservative, so the work depends on the route. Straight = 2 and the curve = −2 (matches the lab manual).":"This wind is conservative (it comes from a potential), so every route between A and B gives the same work. Path does not matter.";
+}
+$("wf").onchange=$("rt").onchange=draw1;
+
+/* ---------- LAB 9 ---------- */
+function draw2(){
+  const m=+$("m").value,cc=+$("c").value,k=+$("k").value,v=+$("v").value;
+  $("mv").textContent=m;$("cv").textContent=cc;$("kv").textContent=k;$("vv").textContent=v;
+  const D=cc*cc-4*m*k;let f,txt,kind,al=-cc/(2*m);
+  if(D>1e-9){const s=Math.sqrt(D),r1=(-cc+s)/(2*m),r2=(-cc-s)/(2*m),C=v/(r1-r2);
+    f=t=>C*(Math.exp(r1*t)-Math.exp(r2*t));kind="Over-damped: slow return, no bounce";
+    txt=`Roots real and distinct: r₁ = ${r1.toFixed(2)}, r₂ = ${r2.toFixed(2)}<br>x(t) = ${C.toFixed(3)}(e^(${r1.toFixed(2)}t) − e^(${r2.toFixed(2)}t))`}
+  else if(D>-1e-9){f=t=>v*t*Math.exp(al*t);kind="Critically damped: fastest return with no bounce";
+    txt=`Roots real and repeated: r = ${al.toFixed(2)}<br>x(t) = ${v} t e^(${al.toFixed(2)}t)`}
+  else{const b=Math.sqrt(-D)/(2*m);f=t=>v/b*Math.exp(al*t)*Math.sin(b*t);kind=cc==0?"Undamped: bounces forever (bad suspension!)":"Under-damped: bounces, then settles";
+    txt=`Roots complex: ${al.toFixed(2)} ± ${b.toFixed(2)}i<br>x(t) = ${(v/b).toFixed(3)} e^(${al.toFixed(2)}t) sin(${b.toFixed(2)}t)`}
+  $("o2").innerHTML=`Auxiliary equation: ${m}r² + ${cc}r + ${k} = 0<br>Discriminant D = c² − 4mk = ${D.toFixed(1)}<br>${txt}<br><span class="b">→ ${kind}</span>`;
+  const c=$("c2"),g=c.getContext("2d"),W=c.width,H=c.height;
+  const T=al<0?Math.min(14,5/Math.abs(al)):10;let pk=1e-4;for(let i=0;i<=300;i++)pk=Math.max(pk,Math.abs(f(T*i/300)));const mx=pk*2/v;
+  $("o2").innerHTML+=`<br>Biggest bounce: ${(pk*100).toFixed(1)} cm`;
+  g.clearRect(0,0,W,H);g.strokeStyle=css("--mut");g.beginPath();g.moveTo(0,H/2);g.lineTo(W,H/2);g.stroke();
+  g.strokeStyle=css("--acc");g.lineWidth=3;g.beginPath();
+  for(let i=0;i<=300;i++){const t=T*i/300,X=i/300*W,Y=H/2-f(t)/mx*(H/2-14);i?g.lineTo(X,Y):g.moveTo(X,Y)}g.stroke();
+  g.fillStyle=css("--mut");g.font="12px sans-serif";g.fillText("time → "+T.toFixed(1)+" s",W-100,H/2-6);g.fillText("up/down movement x(t)",8,14);
+}
+["m","c","k","v"].forEach(i=>$(i).oninput=draw2);
+
+/* ---------- LAB 10 ---------- */
+let t3=0,run=true,last=0;
+function draw3(ts){
+  const a=+$("a").value,l=+$("l").value;$("av").textContent=a;$("lv").textContent=l;
+  const dt=(ts-last)/1000||0;last=ts;if(run)t3+=dt*1.2;const Tend=10/a;if(t3>Tend)t3=0;
+  const u=x=>Math.exp(l*(a*t3-x)),c=$("c3"),g=c.getContext("2d"),W=c.width,H=c.height,Y=v=>H-20-v/3*(H-40);
+  g.clearRect(0,0,W,H);g.strokeStyle=css("--mut");g.setLineDash([5,5]);g.beginPath();g.moveTo(0,Y(1));g.lineTo(W,Y(1));g.stroke();g.setLineDash([]);
+  g.strokeStyle=css("--acc");g.lineWidth=3;g.beginPath();
+  for(let i=0;i<=200;i++){const x=10*i/200,X=i/200*W,y=Y(Math.min(u(x),3));i?g.lineTo(X,y):g.moveTo(X,y)}g.stroke();
+  const xf=a*t3;g.fillStyle="#d97706";g.beginPath();g.arc(xf/10*W,Y(1),8,0,7);g.fill();
+  g.fillStyle=css("--fg");g.font="12px sans-serif";g.fillText("Factory (x = 0)",4,H-4);g.fillText("Town (x = 8 km)",8/10*W-50,H-4);
+  g.strokeStyle="#16a34a";g.lineWidth=2;g.beginPath();g.moveTo(.8*W,10);g.lineTo(.8*W,H-20);g.stroke();
+  $("o3").innerHTML=`t = ${t3.toFixed(1)} h · front at x = a·t = ${xf.toFixed(1)} km<br>Level at the town: u(8, t) = ${Math.min(u(8),999).toFixed(2)}<br>Pollution front reaches the town at t = 8 / a = ${(8/a).toFixed(1)} h`;
+  requestAnimationFrame(draw3);
+}
+$("pl").onclick=()=>{run=!run;$("pl").textContent=run?"Pause":"Play"};
+function paint(el){const p=(el.value-el.min)/(el.max-el.min)*100;
+  el.style.setProperty('--p',`calc(${p}% + ${((.5-p/100)*24).toFixed(1)}px)`);
+  el.style.setProperty('--c',`hsl(${190+p*1.5},85%,55%)`);}
+document.querySelectorAll('input[type=range]').forEach(el=>{el.addEventListener('input',()=>paint(el));paint(el)});
+draw1();draw2();requestAnimationFrame(draw3);
+</script></body></html>
